@@ -1,0 +1,96 @@
+html, body {
+  margin: 0;
+  padding: 0;
+  overflow: hidden;
+  width: 100%;
+  height: 100%;
+  background: #121212;
+  font-family: Arial, sans-serif;
+}
+
+#gameCanvas {
+  display: block;
+  width: 100vw;
+  height: 100vh;
+  background: radial-gradient(circle at top, #1f1f3a, #060609);
+}
+
+#scoreDisplay {
+  position: absolute;
+  top: 16px;
+  left: 50%;
+  transform: translateX(-50%);
+  color: #fff;
+  font-size: 32px;
+  font-weight: bold;
+  text-shadow: 0 0 6px #000;
+  z-index: 10;
+}
+
+#gameOverScreen {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background: rgba(0, 0, 0, 0.85);
+  color: white;
+  display: none;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 18px;
+  z-index: 20;
+}
+
+#gameOverScreen h1 {
+  margin: 0;
+  font-size: 40px;
+}
+
+#gameOverScreen p {
+  margin: 0;
+  font-size: 24px;
+}
+
+#gameOverScreen button {
+  padding: 10px 24px;
+  font-size: 18px;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  background: #ffcc00;
+  color: #000;
+  font-weight: bold;
+}
+#emojiSelectScreen {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background: rgba(0,0,0,0.9);
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 20px;
+  color: white;
+  z-index: 30;
+}
+
+#emojiList {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 15px;
+  font-size: 50px;
+}
+
+.emoji {
+  cursor: pointer;
+  transition: 0.2s;
+}
+
+.emoji:hover {
+  transform: scale(1.3);
+}

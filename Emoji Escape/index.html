@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Emoji Escape</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+
+  <div id="scoreDisplay">0</div>
+  <div id="emojiSelectScreen">
+  <h2>Select Your Emoji</h2>
+  <div id="emojiList">
+    <span class="emoji">😎</span>
+    <span class="emoji">🐱</span>
+    <span class="emoji">👾</span>
+    <span class="emoji">🔥</span>
+    <span class="emoji">🤣</span>
+    <span class="emoji">🤖</span>
+    <span class="emoji">🐼</span>
+    <span class="emoji">⚡</span>
+  </div>
+</div>
+
+
+  <canvas id="gameCanvas"></canvas>
+
+  <div id="gameOverScreen">
+    <h1>Game Over</h1>
+    <p id="finalScore"></p>
+    <button onclick="restartGame()">Play Again</button>
+  </div>
+
+  <script src="script.js"></script>
+</body>
+</html>

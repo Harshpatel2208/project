@@ -1,0 +1,80 @@
+body {
+  margin: 0;
+  overflow: hidden;
+  background: #101010;
+  font-family: Arial;
+}
+
+#game {
+  display: block;
+  width: 100vw;
+  height: 100vh;
+}
+
+#scoreDisplay {
+  position: absolute;
+  top: 20px;
+  left: 50%;
+  transform: translateX(-50%);
+  color: white;
+  font-size: 34px;
+  font-weight: bold;
+  text-shadow: 0 0 8px black;
+}
+
+#gameOverScreen {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background: rgba(0, 0, 0, 0.85);
+  color: white;
+  display: none;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 20px;
+  font-size: 32px;
+}
+
+
+#gameOver.show {
+  transform: translate(-50%, -50%) scale(1);
+}
+
+.touch-zone {
+  position: absolute;
+  top: 0;
+  width: 50%;
+  height: 100%;
+  opacity: 0;
+}
+
+#leftZone {
+  left: 0;
+}
+#rightZone {
+  right: 0;
+}
+#gameCanvas {
+  display: block;
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  z-index: 0;
+  background: #111;
+}
+
+#scoreDisplay {
+  position: absolute;
+  top: 20px;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 10;
+  color: white;
+  font-size: 32px;
+  font-weight: bold;
+}
