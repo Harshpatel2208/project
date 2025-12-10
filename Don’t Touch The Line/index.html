@@ -1,35 +1,43 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-  <title>Don't Touch The Line</title>
-  <link rel="stylesheet" href="style.css">
+  <meta charset="utf-8" />
+  <title>Emoji Escape — Fixed</title>
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <link rel="stylesheet" href="style.css" />
 </head>
 <body>
 
-  <div id="scoreDisplay">0</div>
+  <!-- HUD -->
+  <div id="scoreDisplay">Score: 0</div>
+  <div id="maxScoreDisplay">Max: 0</div>
 
+  <div id="powerupsHUD">
+    <div class="pu" id="pu-shield">🛡️</div>
+    <div class="pu" id="pu-slow">🐌</div>
+    <div class="pu" id="pu-bomb">💣</div>
+  </div>
+
+  <!-- Canvas -->
   <canvas id="gameCanvas"></canvas>
 
-  <div id="leftZone" class="touch-zone"></div>
-  <div id="rightZone" class="touch-zone"></div>
-
-  <div id="gameOver">
-    <h1>Game Over</h1>
-    <p id="finalScore"></p>
-    <p id="bestScore"></p>
+  <!-- Game Over -->
+  <div id="gameOverScreen">
+    <h2 id="gameOverText">Score: 0</h2>
     <button onclick="restartGame()">Restart</button>
   </div>
 
-  <audio id="hitSound" src="https://assets.mixkit.co/active_storage/sfx/2001/2001-preview.mp3"></audio>
-  <audio id="deadSound" src="https://assets.mixkit.co/active_storage/sfx/1003/1003-preview.mp3"></audio>
+  <!-- Mobile Joystick -->
+  <div id="joystickOuter">
+    <div id="joystickInner"></div>
+  </div>
 
- <script src="script.js"></script>
+  <!-- Sounds -->
+  <audio id="sfx-hit" src="https://assets.mixkit.co/active_storage/sfx/2001/2001-preview.mp3" preload="auto"></audio>
+  <audio id="sfx-blast" src="https://assets.mixkit.co/active_storage/sfx/699/699-preview.mp3" preload="auto"></audio>
+  <audio id="sfx-power" src="https://assets.mixkit.co/active_storage/sfx/1483/1483-preview.mp3" preload="auto"></audio>
+  <audio id="sfx-high" src="https://assets.mixkit.co/active_storage/sfx/467/467-preview.mp3" preload="auto"></audio>
 
-  <div id="gameOverScreen">
-  <h1>Game Over</h1>
-  <p id="finalScore"></p>
-  <button onclick="restartGame()">Play Again</button>
-</div>
-
+  <script src="script.js"></script>
 </body>
 </html>

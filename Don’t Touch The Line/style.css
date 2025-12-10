@@ -1,80 +1,107 @@
-body {
+* { box-sizing: border-box; }
+html,body {
   margin: 0;
-  overflow: hidden;
-  background: #101010;
-  font-family: Arial;
-}
-
-#game {
-  display: block;
-  width: 100vw;
-  height: 100vh;
-}
-
-#scoreDisplay {
-  position: absolute;
-  top: 20px;
-  left: 50%;
-  transform: translateX(-50%);
-  color: white;
-  font-size: 34px;
-  font-weight: bold;
-  text-shadow: 0 0 8px black;
-}
-
-#gameOverScreen {
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100vw;
-  height: 100vh;
-  background: rgba(0, 0, 0, 0.85);
-  color: white;
-  display: none;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  gap: 20px;
-  font-size: 32px;
-}
-
-
-#gameOver.show {
-  transform: translate(-50%, -50%) scale(1);
-}
-
-.touch-zone {
-  position: absolute;
-  top: 0;
-  width: 50%;
+  padding: 0;
   height: 100%;
-  opacity: 0;
+  width: 100%;
+  background: #0f0f10;
+  font-family: Arial, Helvetica, sans-serif;
+  overflow: hidden;
 }
 
-#leftZone {
-  left: 0;
-}
-#rightZone {
-  right: 0;
-}
 #gameCanvas {
   display: block;
-  position: absolute;
-  top: 0;
-  left: 0;
   width: 100vw;
   height: 100vh;
-  z-index: 0;
-  background: #111;
+  background: linear-gradient(#0f0f10,#070707);
 }
 
 #scoreDisplay {
   position: absolute;
-  top: 20px;
+  top: 12px;
+  left: 16px;
+  color: #fff;
+  font-size: 28px;
+  z-index: 30;
+}
+
+#maxScoreDisplay {
+  position: absolute;
+  top: 12px;
+  right: 16px;
+  color: #ffc400;
+  font-size: 24px;
+  z-index: 30;
+}
+
+#powerupsHUD {
+  position: absolute;
   left: 50%;
   transform: translateX(-50%);
-  z-index: 10;
+  bottom: 12px;
+  display: flex;
+  gap: 10px;
+  z-index: 35;
+}
+
+.pu {
+  font-size: 24px;
+  padding: 6px 10px;
+  background: rgba(255,255,255,0.04);
   color: white;
-  font-size: 32px;
-  font-weight: bold;
+  border-radius: 8px;
+  box-shadow: 0 6px 18px rgba(0,0,0,0.5);
+  user-select: none;
+}
+.pu.used {
+  opacity: 0.35;
+  filter: grayscale(1);
+}
+
+/* Game Over modal */
+#gameOverScreen {
+  position: fixed;
+  inset: 0;
+  display: none;
+  background: rgba(0,0,0,0.85);
+  color: white;
+  z-index: 60;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  gap: 14px;
+  font-size: 22px;
+}
+#gameOverScreen button {
+  padding: 10px 18px;
+  font-size: 18px;
+  border-radius: 10px;
+  border: none;
+  background: #ffc400;
+  color: #000;
+  cursor: pointer;
+}
+
+/* Joystick */
+#joystickOuter {
+  position: absolute;
+  left: 18px;
+  bottom: 18px;
+  width: 120px;
+  height: 120px;
+  border-radius: 50%;
+  background: rgba(255,255,255,0.03);
+  border: 2px solid rgba(255,255,255,0.04);
+  z-index: 40;
+  touch-action: none;
+}
+#joystickInner {
+  position: absolute;
+  width: 44px;
+  height: 44px;
+  left: 38px;
+  top: 38px;
+  border-radius: 50%;
+  background: #00e6c6;
+  box-shadow: 0 8px 20px rgba(0,0,0,0.6);
 }
