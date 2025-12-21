@@ -93,34 +93,57 @@ function updateJoystickScale() {
   // set joystick size & movement multiplier based on screen width
   const w = Math.min(window.innerWidth, window.innerHeight);
   // larger screens -> slightly larger joystick and higher multiplier
-  if (w < 380) { JOY_SCALE = 0.06; joyIn.style.width = '40px'; joyIn.style.height = '40px'; joyIn.style.left = '30px'; joyIn.style.top = '30px'; joyOut.style.width = '100px'; joyOut.style.height = '100px'; }
-  else if (w < 520) { JOY_SCALE = 0.075; joyIn.style.width = '44px'; joyIn.style.height = '44px'; joyIn.style.left = '38px'; joyIn.style.top = '38px'; joyOut.style.width = '110px'; joyOut.style.height = '110px'; }
-  else { JOY_SCALE = 0.09; joyIn.style.width = '48px'; joyIn.style.height = '48px'; joyIn.style.left = '36px'; joyIn.style.top = '36px'; joyOut.style.width = '120px'; joyOut.style.height = '120px'; }
+  if (w < 380) { JOY_SCALE = 0.08; joyIn.style.width = '40px'; joyIn.style.height = '40px'; joyIn.style.left = '30px'; joyIn.style.top = '30px'; joyOut.style.width = '100px'; joyOut.style.height = '100px'; }
+  else if (w < 520) { JOY_SCALE = 0.095; joyIn.style.width = '44px'; joyIn.style.height = '44px'; joyIn.style.left = '38px'; joyIn.style.top = '38px'; joyOut.style.width = '110px'; joyOut.style.height = '110px'; }
+  else { JOY_SCALE = 0.11; joyIn.style.width = '48px'; joyIn.style.height = '48px'; joyIn.style.left = '36px'; joyIn.style.top = '36px'; joyOut.style.width = '120px'; joyOut.style.height = '120px'; }
 }
 updateJoystickScale();
 
-// joystick handlers
-joyOut.addEventListener('touchstart', () => { joyActive = true; }, { passive: true });
-joyOut.addEventListener('touchmove', e => {
+// joystick handlers with smooth response
+joyOut.addEventListener('touchstart', (e) => { 
+  joyActive = true;
+  handleJoystickMove(e);
+}, { passive: false });
+
+joyOut.addEventListener('touchmove', handleJoystickMove, { passive: false });
+
+function handleJoystickMove(e) {
+  if (!joyActive && e.type !== 'touchstart') return;
+  
   e.preventDefault();
   const rect = joyOut.getBoundingClientRect();
   const t = e.touches[0];
-  const x = t.clientX - (rect.left + rect.width / 2);
-  const y = t.clientY - (rect.top + rect.height / 2);
-  const max = Math.min(rect.width, rect.height) * 0.35;
-  const dist = Math.hypot(x, y) || 1;
-  const limit = dist > max ? max / dist : 1;
-  joyX = x * limit;
-  joyY = y * limit;
-  joyIn.style.left = (rect.width / 2 - joyIn.offsetWidth / 2 + joyX) + 'px';
-  joyIn.style.top = (rect.height / 2 - joyIn.offsetHeight / 2 + joyY) + 'px';
-}, { passive: false });
+  const centerX = rect.left + rect.width / 2;
+  const centerY = rect.top + rect.height / 2;
+  const x = t.clientX - centerX;
+  const y = t.clientY - centerY;
+  const maxRadius = Math.min(rect.width, rect.height) * 0.4;
+  const dist = Math.hypot(x, y);
+  
+  if (dist > maxRadius) {
+    const angle = Math.atan2(y, x);
+    joyX = Math.cos(angle) * maxRadius;
+    joyY = Math.sin(angle) * maxRadius;
+  } else {
+    joyX = x;
+    joyY = y;
+  }
+  
+  // Update visual position of inner circle
+  const innerX = rect.width / 2 - joyIn.offsetWidth / 2 + joyX;
+  const innerY = rect.height / 2 - joyIn.offsetHeight / 2 + joyY;
+  joyIn.style.left = innerX + 'px';
+  joyIn.style.top = innerY + 'px';
+}
+
 joyOut.addEventListener('touchend', () => {
-  joyActive = false; joyX = 0; joyY = 0;
-  // return inner to center
+  joyActive = false; 
+  joyX = 0; 
+  joyY = 0;
+  // return inner to center with smooth transition
   joyIn.style.left = (joyOut.offsetWidth / 2 - joyIn.offsetWidth / 2) + 'px';
   joyIn.style.top = (joyOut.offsetHeight / 2 - joyIn.offsetHeight / 2) + 'px';
-});
+}, { passive: true });
 
 /* -------------------- Move player function -------------------- */
 function movePlayer() {
@@ -232,6 +255,7 @@ function restartGame() {
   score = 0; gameOver = false;
   topObs = []; bottomObs = []; powerups = []; particles = []; trail = []; flash = 0;
   shieldActive = slowActive = false;
+  joyActive = false; joyX = 0; joyY = 0;
   document.getElementById('pu-shield').classList.remove('used');
   document.getElementById('pu-slow').classList.remove('used');
   document.getElementById('gameOverScreen').style.display = 'none';

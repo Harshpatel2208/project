@@ -27,7 +27,7 @@ html,body{height:100%;width:100%;margin:0;padding:0;background:#08080a;font-fami
 
 /* Joystick center-bottom */
 #joystickOuter{position:fixed;left:50%;transform:translateX(-50%);bottom:26px;width:120px;height:120px;border-radius:50%;background:rgba(255,255,255,0.03);border:2px solid rgba(255,255,255,0.04);z-index:70;touch-action:none}
-#joystickInner{position:absolute;width:48px;height:48px;border-radius:50%;background:#00e6c6;left:36px;top:36px;box-shadow:0 8px 20px rgba(0,0,0,0.5)}
+#joystickInner{position:absolute;width:48px;height:48px;border-radius:50%;background:#00e6c6;left:36px;top:36px;box-shadow:0 8px 20px rgba(0,0,0,0.5);transition:left 0.05s ease-out, top 0.05s ease-out}
 @media (max-width:420px){
   #joystickOuter{width:100px;height:100px;bottom:18px}
   #joystickInner{width:40px;height:40px;left:30px;top:30px}
