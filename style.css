@@ -1,0 +1,45 @@
+*{box-sizing:border-box}
+html,body{height:100%;width:100%;margin:0;padding:0;background:#08080a;font-family:Inter,Arial,Helvetica,sans-serif;overflow:hidden;color:#fff}
+#startScreen{position:fixed;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:18px;background:linear-gradient(180deg,rgba(0,0,0,0.6),rgba(0,0,0,0.85));z-index:80}
+#startScreen h1{font-size:36px;margin:0}
+#startScreen .hint{margin:0;color:#ddd}
+#emojiGrid{display:grid;grid-template-columns:repeat(5,60px);gap:12px;padding:12px;background:rgba(0,0,0,0.5);border-radius:12px;border:1px solid rgba(255,255,255,0.1)}
+.emojiCell{width:60px;height:60px;border-radius:12px;display:flex;align-items:center;justify-content:center;font-size:32px;cursor:pointer;background:rgba(255,255,255,0.08);border:2px solid rgba(255,255,255,0.15);transition:all 0.2s ease;user-select:none}
+.emojiCell:hover{background:rgba(255,255,255,0.15);border-color:rgba(0,230,200,0.5);transform:scale(1.05)}
+.emojiCell.selected{outline:3px solid rgba(0,230,200,0.3);box-shadow:0 8px 24px rgba(0,230,200,0.15);background:rgba(0,230,200,0.1)}
+#startControls{display:flex;gap:14px;align-items:center;flex-wrap:wrap;justify-content:center}
+#startBtn{padding:12px 24px;border-radius:10px;border:none;background:#00e6c6;color:#000;font-weight:700;cursor:pointer;transition:all 0.2s ease;font-size:16px}
+#startBtn:hover{background:#00d9b3;transform:scale(1.05)}
+#chosenLabel{color:#ddd;font-size:14px}
+#chosenEmoji{font-size:28px}
+
+/* HUD */
+#scoreDisplay{position:fixed;left:16px;top:12px;font-size:20px;z-index:50;font-weight:600}
+#maxScoreDisplay{position:fixed;right:16px;top:12px;font-size:18px;color:#ffc400;z-index:50;font-weight:600}
+#powerupsHUD{position:fixed;left:50%;transform:translateX(-50%);bottom:180px;display:flex;gap:10px;z-index:60}
+.pu{font-size:22px;padding:8px 12px;background:rgba(255,255,255,0.08);border-radius:10px;border:1px solid rgba(255,255,255,0.15);transition:all 0.3s ease}
+.pu.used{opacity:0.3;filter:grayscale(1);background:rgba(0,0,0,0.5)}
+
+/* Canvas */
+#gameCanvas{display:block;width:100vw;height:100vh;background:linear-gradient(180deg,#071017,#020204);}
+
+/* Game Over */
+#gameOverScreen{position:fixed;inset:0;display:none;align-items:center;justify-content:center;flex-direction:column;gap:16px;background:rgba(0,0,0,0.93);z-index:90}
+#gameOverScreen h2{margin:0;font-size:48px;color:#ffc400}
+#gameOverScreen button{padding:12px 24px;border-radius:10px;border:none;background:#ffc400;color:#000;font-weight:700;cursor:pointer;transition:all 0.2s ease;font-size:16px}
+#gameOverScreen button:hover{background:#ffb300;transform:scale(1.05)}
+
+/* Joystick center-bottom */
+#joystickOuter{position:fixed;left:50%;transform:translateX(-50%);bottom:26px;width:120px;height:120px;border-radius:50%;background:rgba(255,255,255,0.03);border:2px solid rgba(255,255,255,0.04);z-index:70;touch-action:none}
+#joystickInner{position:absolute;width:48px;height:48px;border-radius:50%;background:#00e6c6;left:36px;top:36px;box-shadow:0 8px 20px rgba(0,0,0,0.5);transition:left 0.05s ease-out, top 0.05s ease-out}
+
+@media (max-width:420px){
+  #joystickOuter{width:100px;height:100px;bottom:18px}
+  #joystickInner{width:40px;height:40px;left:30px;top:30px}
+  .emojiCell{width:48px;height:48px;font-size:26px}
+  #emojiGrid{grid-template-columns:repeat(4,50px);gap:10px;padding:10px}
+  #startScreen h1{font-size:28px}
+  #startScreen .hint{font-size:14px}
+  #powerupsHUD{bottom:140px;gap:8px}
+  .pu{font-size:18px;padding:6px 10px}
+}
