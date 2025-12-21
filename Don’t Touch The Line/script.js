@@ -1,26 +1,24 @@
 const canvas = document.getElementById("gameCanvas");
 const ctx = canvas.getContext("2d");
-let topObstacles = [];
-let bottomObstacles = [];
+let obstacles = [];
 
 let EMOJI = "😎"; // default
-
 
 function resize() {
     canvas.width = window.innerWidth;
     canvas.height = window.innerHeight;
 }
 resize();
+window.addEventListener("resize", resize);
+
 document.querySelectorAll(".emoji").forEach(e => {
     e.addEventListener("click", () => {
-        EMOJI = e.textContent;            // set selected emoji
+        EMOJI = e.textContent;
         document.getElementById("emojiSelectScreen").style.display = "none";
         resetPlayer();
-        update();                         // start game
+        update();
     });
 });
-
-window.addEventListener("resize", resize);
 
 // PLAYER (emoji)
 let player = {
@@ -37,7 +35,7 @@ function resetPlayer() {
 }
 resetPlayer();
 
-// CONTROLS - single declaration with all directions
+// CONTROLS
 let keys = {
     left: false,
     right: false,
@@ -129,16 +127,7 @@ document.addEventListener("mousemove", (e) => {
     else if (my > player.y + player.size) keys.down = true, keys.up = false;
 });
 
-// Touch movement (mobile)
-document.addEventListener("touchmove", (e) => {
-    const t = e.touches[0];
-    player.x = t.clientX - player.size / 2;
-    player.y = t.clientY - player.size / 2;
-});
-
 // OBSTACLES
-let obstacles = [];
-
 function spawnObstacle() {
     const w = 40 + Math.random() * 40;
     const h = 20 + Math.random() * 20;
@@ -200,61 +189,44 @@ function movePlayer() {
 function update() {
     if (gameOver) return;
 
-    ctx.clearRect(0, 0, canvas.width, canvas.height);
+    // Clear canvas
+    ctx.fillStyle = "rgb(18, 18, 18)";
+    ctx.fillRect(0, 0, canvas.width, canvas.height);
 
     // Move player
     movePlayer();
 
-    // Draw player
+    // Draw player once
     ctx.font = `${player.size}px serif`;
     ctx.textBaseline = "top";
     ctx.fillText(EMOJI, player.x, player.y);
 
-    // Update obstacles
-    obstacles.forEach((o) => {
+    // Update and draw obstacles
+    for (let i = obstacles.length - 1; i >= 0; i--) {
+        const o = obstacles[i];
         o.y += o.speed;
 
         // Draw obstacle
-        // Draw player
-        ctx.font = `${player.size}px serif`;
-        ctx.textBaseline = "top";
-        ctx.fillText(EMOJI, player.x, player.y);
-
-
-
+        ctx.fillStyle = "#ff4444";
+        ctx.shadowColor = "rgba(255, 50, 50, 0.5)";
+        ctx.shadowBlur = 10;
+        ctx.fillRect(o.x, o.y, o.width, o.height);
+        ctx.shadowBlur = 0;
 
         // Collision check
         if (isColliding(player, o)) {
             endGame();
+            return;
         }
-        topObstacles.forEach(o => {
-  o.y += o.speed;
 
-  ctx.fillStyle = "#ff4444";
-  ctx.fillRect(o.x, o.y, o.width, o.height);
+        // Remove off-screen obstacles
+        if (o.y > canvas.height + 50) {
+            obstacles.splice(i, 1);
+            score++; // Award points for dodging
+        }
+    }
 
-  if (isColliding(player, o)) endGame();
-});
-
-    topObstacles = topObstacles.filter(o => o.y < canvas.height + 50);
-    bottomObstacles.forEach(o => {
-    o.y -= o.speed;
-
-  ctx.fillStyle = "orange";
-  ctx.fillRect(o.x, o.y, o.width, o.height);
-
-  if (isColliding(player, o)) endGame();
-});
-
-bottomObstacles = bottomObstacles.filter(o => o.y + o.height > -50);
-
-    });
-
-    // Remove off-screen obstacles
-    obstacles = obstacles.filter((o) => o.y < canvas.height + 50);
-
-    // Score
-    score++;
+    // Update score display
     document.getElementById("scoreDisplay").textContent = score;
 
     requestAnimationFrame(update);
@@ -277,6 +249,7 @@ function restartGame() {
     joyActive = false;
     joyX = 0;
     joyY = 0;
+    keys = { left: false, right: false, up: false, down: false };
     document.getElementById("scoreDisplay").textContent = "0";
     document.getElementById("gameOverScreen").style.display = "none";
 
@@ -284,33 +257,6 @@ function restartGame() {
     spawnInterval = setInterval(spawnObstacle, 800);
     update();
 }
-function spawnTopObstacle() {
-  const w = 40 + Math.random() * 40;
-  const h = 20 + Math.random() * 20;
 
-  topObstacles.push({
-    x: Math.random() * (canvas.width - w),
-    y: -h,
-    width: w,
-    height: h,
-    speed: 3 + Math.random() * 3
-  });
-}
-
-function spawnBottomObstacle() {
-  const w = 40 + Math.random() * 40;
-  const h = 20 + Math.random() * 20;
-
-  bottomObstacles.push({
-    x: Math.random() * (canvas.width - w),
-    y: canvas.height + h,
-    width: w,
-    height: h,
-    speed: 3 + Math.random() * 3
-  });
-}
-setInterval(spawnTopObstacle, 900);
-setInterval(spawnBottomObstacle, 900);
-    
 // Start the game
 update();
