@@ -1,54 +1,40 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <title>Don't Touch The Line</title>
+  <meta charset="UTF-8" />
+  <title>Emoji Escape</title>
   <link rel="stylesheet" href="style.css" />
 </head>
 <body>
 
-  <!-- Start / Emoji Select Screen -->
-  <div id="startScreen">
-    <h1>Don't Touch The Line</h1>
-    <p class="hint">Choose your player</p>
-    <div id="emojiGrid"></div>
-    <div id="startControls">
-      <button id="startBtn">Start Game</button>
-      <div id="chosenLabel">Chosen: <span id="chosenEmoji">😎</span></div>
-    </div>
+  <div id="scoreDisplay">0</div>
+  <div id="emojiSelectScreen">
+  <h2>Select Your Emoji</h2>
+  <div id="emojiList">
+    <span class="emoji">😎</span>
+    <span class="emoji">🐱</span>
+    <span class="emoji">👾</span>
+    <span class="emoji">🔥</span>
+    <span class="emoji">🤣</span>
+    <span class="emoji">🤖</span>
+    <span class="emoji">🐼</span>
+    <span class="emoji">⚡</span>
   </div>
+</div>
 
-  <!-- HUD -->
-  <div id="scoreDisplay">Score: 0</div>
-  <div id="maxScoreDisplay">Max: 0</div>
 
-  <!-- Powerup HUD -->
-  <div id="powerupsHUD">
-    <div class="pu" id="pu-shield">🛡️</div>
-    <div class="pu" id="pu-slow">🐌</div>
-    <div class="pu" id="pu-bomb">💣</div>
-  </div>
-
-  <!-- Canvas -->
   <canvas id="gameCanvas"></canvas>
-
-  <!-- Game Over Screen -->
-  <div id="gameOverScreen">
-    <h2 id="gameOverText">Score: 0</h2>
-    <button onclick="restartGame()">Restart</button>
-  </div>
 
   <!-- Joystick -->
   <div id="joystickOuter">
     <div id="joystickInner"></div>
   </div>
 
-  <!-- Sounds -->
-  <audio id="sfx-hit" src="https://assets.mixkit.co/active_storage/sfx/2001/2001-preview.mp3" preload="auto"></audio>
-  <audio id="sfx-blast" src="https://assets.mixkit.co/active_storage/sfx/699/699-preview.mp3" preload="auto"></audio>
-  <audio id="sfx-power" src="https://assets.mixkit.co/active_storage/sfx/1483/1483-preview.mp3" preload="auto"></audio>
-  <audio id="sfx-high" src="https://assets.mixkit.co/active_storage/sfx/467/467-preview.mp3" preload="auto"></audio>
+  <div id="gameOverScreen">
+    <h1>Game Over</h1>
+    <p id="finalScore"></p>
+    <button onclick="restartGame()">Play Again</button>
+  </div>
 
   <script src="script.js"></script>
 </body>
